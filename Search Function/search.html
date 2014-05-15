@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" id="nw">
+<head>
+<link rel="stylesheet" type="text/css" href="style.css">
+<script type="text/javascript" src="jquery.js"></script>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>NoteWorthy Search</title>
+</head>
+<body>
+<nav>
+	<ul>
+		<li><a href="#">Navigate</a>
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="login.html">Log In</a></li>
+				<li><a href="register.html">Register</a></li>
+				<li><a href="myprofile.html">Profile</a></li>
+				<li><a href="search.html">Search</a></li>
+				<li><a href="sitemap.html">Site Map</a></li>
+			</ul>
+	</ul>
+</nav>
+<div id="container">
+<img id="banner" src="noteworthy.jpg" alt="Note Worthy"/>
+<h1>Search for Music</h1>
+	
+<div id="wrapper" >
+	<form id="Search" name="Search" onsubmit="return validateForm()" method="post">
+		<input type="text" name="SearchField" size="50"/>
+	<input type="submit" id="Submit" value="Search" />
+	</form>
+</div>
+<div id="searchresults">
+</div>
+<script>
+function validateForm()
+{
+var x=document.forms["Search"]["SearchField"].value;
+var y=x.split(' ').join('+');
+var z=("https://itunes.apple.com/search?term='" + y + "'&entity=song");
+$("#searchresults").empty();
+$.ajax({
+	url: z,
+	type: "GET",
+	dataType: "jsonp",
+	async: false,
+	success: function(data) {
+	for (i=0; i<data.results.length; i++) {
+	var a = data.results[i].artworkUrl100;
+	var b = a.replace("100x100", "600x600");
+	var artist = data.results[i].artistId;
+	$("#searchresults").append("<div class='separator'>" + "<h3>" + data.results[i].trackName + " - " 
+	+ "<a id='" + artist + "' href='artists.html?artistId=" + artist + "'>" + data.results[i].artistName + "</h3>" + "<br/>" 
+	+ "<img src='" + b + "' alt=''/>" + "</a>" + "<br/>"
+	+ "<audio controls preload='none'><source src='" + data.results[i].previewUrl + "' type='audio/mpeg'></embed><audio>"
+	+ "</div>");
+	}
+	}
+});
+return false;
+}
+</script>
+</div>
+<footer>
+Copyright &#169; 2014 Marcus Green &nbsp;
+</footer>
+</body>
+</html>
