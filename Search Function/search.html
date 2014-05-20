@@ -47,11 +47,15 @@ $.ajax({
 	success: function(data) {
 	for (i=0; i<data.results.length; i++) {
 	var a = data.results[i].artworkUrl100;
-	var b = a.replace("100x100", "600x600");
+	var b = a.replace("100x100", "225x225");
 	var artist = data.results[i].artistId;
-	$("#searchresults").append("<div class='separator'>" + "<h3>" + data.results[i].trackName + " - " 
-	+ "<a id='" + artist + "' href='artists.html?artistId=" + artist + "'>" + data.results[i].artistName + "</h3>" + "<br/>" 
+	var collection = data.results[i].collectionId;
+	var track = data.results[i].trackId;
+	$("#searchresults").append("<div class='separator'>" 
+	+ "<a href='albums.html?collectionId=" + collection + "'>"
 	+ "<img src='" + b + "' alt=''/>" + "</a>" + "<br/>"
+	+ "<h3>" + "<a  href='tracks.html?trackId=" + track + "'>" + data.results[i].trackName + "</a>" + "<br/>" 
+	+ "<a href='artists.html?artistId=" + artist + "'>" + data.results[i].artistName + "</a>" + "</h3>"
 	+ "<audio controls preload='none'><source src='" + data.results[i].previewUrl + "' type='audio/mpeg'></embed><audio>"
 	+ "</div>");
 	}

@@ -5,7 +5,10 @@
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="getUrlVars.js"></script>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<title>NoteWorthy Artists</title>
+<title>NoteWorthy Songs</title>
+<style>
+
+</style>
 </head>
 <body>
 <nav>
@@ -23,13 +26,13 @@
 </nav>
 <div id="container">
 <img id="banner" src="noteworthy.jpg" alt="Note Worthy"/>
-<div id="artist">
+<div id="track">
 </div>
 </div>
 <script>
 window.onload = function() {
-var artistId = getUrlVars()["artistId"];
-var z=("https://itunes.apple.com/lookup?id=" + artistId + "&entity=album&limit=1000");
+var trackId = getUrlVars()["trackId"];
+var z=("https://itunes.apple.com/lookup?id=" + trackId + "&entity=song");
 $("#artist").empty();
 $.ajax({
 	url: z,
@@ -37,16 +40,15 @@ $.ajax({
 	dataType: "jsonp",
 	async: false,
 	success: function(data) {
-	$("#artist").append("<h1>Albums by " + data.results[0].artistName + "</h1>");
-	for (i=1; i<data.results.length; i++) {
-	var a = data.results[i].artworkUrl100;
-	var b = a.replace("100x100", "225x225");
-	var collection = data.results[i].collectionId;
-	$("#artist").append("<div class='separator'>" 
-	+ "<a href='albums.html?collectionId=" + collection + "'>"
-	+ "<img src='" + b + "' alt=''/>" 
-	+ "<h3>" + data.results[i].collectionName + "</h3>" + "</a>" + "</div>");
-	}
+	var a = data.results[0].artworkUrl100;
+	var b = a.replace("100x100", "600x600");
+	var artist = data.results[0].artistId;
+	var collection = data.results[0].collectionId;
+	$("#track").append("<h3>" + data.results[0].trackName + "<br/>" 
+	+ "<a href='albums.html?collectionId=" + collection + "'>" + data.results[0].collectionName + "</a>" + "<br/>" 
+	+ "<a href='artists.html?artistId=" + artist + "'>" + data.results[0].artistName + "</a>" + "<br/>" 
+	+ "<img src='" + b + "' width='400' height='400' alt=''/>" + "<br/>"
+	+ "<audio controls preload='none'><source src='" + data.results[0].previewUrl + "' type='audio/mpeg'></embed><audio>" + "</h3>");
 	}
 });
 return false;
