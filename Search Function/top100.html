@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" id="nw">
+<head>
+<link rel="stylesheet" type="text/css" href="style.css">
+<script type="text/javascript" src="jquery.js"></script>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>NoteWorthy Top 100</title>
+</head>
+<body>
+<nav>
+	<ul>
+		<li><a href="#">Navigate</a>
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="login.html">Log In</a></li>
+				<li><a href="register.html">Register</a></li>
+				<li><a href="myprofile.html">Profile</a></li>
+				<li><a href="search.html">Search</a></li>
+				<li><a href="sitemap.html">Site Map</a></li>
+			</ul>
+	</ul>
+</nav>
+<div id="container">
+<img id="banner" src="noteworthy.jpg" alt="Note Worthy"/>
+<h1>Top 100</h1>
+	
+<div id="wrapper" >
+	<form id="top" name="top" onsubmit="return validateForm()" method="post">
+		<input type="radio" id="songs" name="type" value="songs" checked="checked">Songs<br/>
+		<input type="radio" id="albums" name="type" value="albums">Albums<br/>
+		<select id="genres">
+			<option value="All">All</option>
+			<option value="20">Alternative</option>
+			<option value="29">Anime</option>
+			<option value="2">Blues</option>
+			<option value="1122">Brazilian</option>
+			<option value="4">Children's Music</option>
+			<option value="1232">Chinese</option>
+			<option value="22">Christian and Gospel</option>
+			<option value="5">Classical</option>
+			<option value="3">Comedy</option>
+			<option value="6">Country</option>
+			<option value="17">Dance</option>
+			<option value="50000063">Disney</option>
+			<option value="25">Easy Listening</option>
+			<option value="7">Electronic</option>
+			<option value="28">Enka</option>
+			<option value="50">Fitness & Workout</option>
+			<option value="50000064">French Pop</option>
+			<option value="50000068">German Folk</option>
+			<option value="50000066">German Pop</option>
+			<option value="18">Hip-Hop/Rap</option>
+			<option value="8">Holiday</option>
+			<option value="1262">Indian</option>
+			<option value="53">Instrumental</option>
+			<option value="27">J-Pop</option>
+			<option value="11">Jazz</option>
+			<option value="51">K-Pop</option>
+			<option value="52">Karaoke</option>
+			<option value="30">Kayokyoku</option>
+			<option value="1243">Korean</option>
+			<option value="12">Latino</option>
+			<option value="13">New Age</option>
+			<option value="9">Opera</option>
+			<option value="14">Pop</option>
+			<option value="15">R&B/Soul</option>
+			<option value="24">Reggae</option>
+			<option value="21">Rock</option>
+			<option value="10">Singer/Songwriter</option>
+			<option value="16">Soundtrack</option>
+			<option value="50000061">Spoken Word</option>
+			<option value="23">Vocal</option>
+			<option value="19">World</option>
+		</select>
+	<input type="submit" id="Submit" value="Go" />
+	</form>
+</div>
+<div id="top100">
+</div>
+<script>
+function validateForm()
+{
+if (document.getElementById("songs").checked) {
+	var x="song";
+}
+if (document.getElementById("albums").checked) {
+	var x="album";
+}
+var w=document.getElementById("genres");
+var y=w.options[w.selectedIndex].value;
+if (y=="All") var gen = "";
+else var gen = ("genre=" + y + "/");
+var z=("https://itunes.apple.com/us/rss/top" + x + "s/limit=10/" + gen + "json");
+console.log(z);
+$("#top100").empty();
+$.ajax({
+	url: z,
+	type: "GET",
+	dataType: "jsonp",
+	async: false,
+	success: function(data) {
+	for (i=0; i<data.feed.entry.length; i++) {
+	var id = data.feed.entry[i].id.attributes["im:id"];
+	z2 = ("https://itunes.apple.com/lookup?id=" + id + "&entity=" + x);
+$.ajax({
+	url: z2,
+	type: "GET",
+	dataType: "jsonp",
+	async: false,
+	success: function(data) {
+	var a = data.results[0].artworkUrl100;
+	var b = a.replace("100x100", "225x225");
+	var artist = data.results[0].artistId;
+	var collection = data.results[0].collectionId;
+	var trackcount = document.getElementsByClassName("separator");
+	var tracknum = trackcount.length + 1;
+	if (x=="song") {
+	var track = data.results[0].trackId;
+	$("#top100").append("<div class='separator'>" 
+	+ "<a href='albums.html?collectionId=" + collection + "'>"
+	+ "<img src='" + b + "' alt=''/>" + "</a>" + "<br/>"
+	+ "<h3>" + "<a  href='tracks.html?trackId=" + track + "'>" + tracknum + ". " + data.results[0].trackName + "</a>" + "<br/>" 
+	+ "<a href='artists.html?artistId=" + artist + "'>" + data.results[0].artistName + "</a>" + "</h3>"
+	+ "<audio controls preload='none'><source src='" + data.results[0].previewUrl + "' type='audio/mpeg'></embed><audio>"
+	+ "</div>");
+	}
+	if (x=="album") {
+	$("#top100").append("<div class='separator'>" 
+	+ "<a href='albums.html?collectionId=" + collection + "'>"
+	+ "<img src='" + b + "' alt=''/>" + "<br/>"
+	+ "<h3>" + tracknum + ". " + data.results[0].collectionName + "</a>" + "<br/>" 
+	+ "<a href='artists.html?artistId=" + artist + "'>" + data.results[0].artistName + "</a>" + "</h3>"
+	+ "</div>");
+	}
+	}
+});
+}
+}
+});
+return false;
+}
+</script>
+</div>
+<footer>
+Copyright &#169; 2014 Marcus Green &nbsp;
+</footer>
+</body>
+</html>
