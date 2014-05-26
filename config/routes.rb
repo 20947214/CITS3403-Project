@@ -1,5 +1,30 @@
-CITS3403Project::Application.routes.draw do
-  # The priority is based upon order of creation: first created -> highest priority.
+SampleApp1::Application.routes.draw do
+  
+
+
+
+resources :users do
+   member do
+    get :following, :followers
+   end
+end
+resources :sessions,      only: [:new, :create, :destroy]
+resources :microposts,    only: [:create, :destroy] 
+resources :relationships, only: [:create, :destroy]
+root  'static_page#home'
+match '/signup',  to: 'users#new',           via: 'get'
+match '/signin',  to: 'sessions#new',        via: 'get'
+match '/signout', to: 'sessions#destroy',    via: 'delete'
+match '/help',    to: 'static_page#help',    via: 'get'
+match '/about',   to: 'static_page#about',   via: 'get'
+match '/contact', to: 'static_page#contact', via: 'get'
+match '/search',  to: 'static_page#search',  via: 'post'
+match '/albums',  to: 'static_page#albums',  via: 'post'
+match '/artists', to: 'static_page#artists', via: 'post'
+match '/tracks',  to: 'static_page#tracks',  via: 'post'
+match '/top100',  to: 'static_page#top100',  via: 'post'
+
+# The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"

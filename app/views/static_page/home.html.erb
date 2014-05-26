@@ -1,0 +1,77 @@
+<% if signed_in? %>
+  <div class="row">
+    <aside class="span4">
+      <section>
+        <%= render 'shared/user_info' %>
+      </section>
+      <section>
+        <%= render 'shared/stats' %>
+      </section>
+      <section>
+        <%= render 'shared/micropost_form' %>
+      </section>
+    </aside>
+    <div class="span8">
+      <h3>Micropost Feed</h3>
+      <%= render 'shared/feed' %>
+    </div>
+  </div>
+<% else %>
+  <!DOCTYPE html>
+<html>
+<head>
+<%= stylesheet_link_tag "splash" , media: "all",
+                                           "data-turbolinks-track" => true %>
+    
+    <%= csrf_meta_tags %>
+<meta charset="UTF-8">
+<title>Melodia</title>
+
+<script type="text/javascript">
+var randnum = Math.random();
+var inum = 7;
+// Change this number to the number of images you are using.
+var rand1 = Math.round(randnum * (inum-1)) + 1;
+images = new Array
+images[1] = "/assets/splash/1.jpg"
+images[2] = "/assets/splash/2.jpg"
+images[3] = "/assets/splash/3.jpg"
+images[4] = "/assets/splash/4.jpg"
+images[5] = "/assets/splash/5.jpg"
+images[6] = "/assets/splash/6.jpg"
+images[7] = "/assets/splash/7.jpg"
+// Ensure you have an array item for every image you are using.
+var image = images[rand1]
+// Deactivate cloaking device -->
+</script>
+
+</head>
+
+<script language="JavaScript">
+document.write('<body style="background-image:url('+ image +');background-repeat:no-repeat;background-size:cover;">')
+// Deactivate cloaking device -->
+</script>
+
+<div id="banner_container">
+<ul id="banner">
+<li><%= link_to (image_tag("nav_logo_small.png", :alt => "Melodia")), root_path %>
+	<ul><li><a href="#">blog</a></li></ul>
+</li>
+<li><%= link_to "Melodia", root_path %></li> 
+
+</div>
+
+<div id="shift_down_container">
+    
+	<%= image_tag("splash/splash_logo.png", :alt => "Melodia Logo", id: "splash_logo") %>
+	</br>
+<%= link_to "Sign up now!", signup_path, id: "sign_up" %>
+</br>
+<%= link_to "Sign in!", signin_path, id: "sign_in" %>
+</div>
+
+
+</body>
+
+</html>
+<% end %>

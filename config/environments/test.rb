@@ -1,5 +1,11 @@
-CITS3403Project::Application.configure do
-  # Settings specified here will take precedence over those in config/application.rb.
+SampleApp1::Application.configure do
+  
+
+ActiveModel::SecurePassword.min_cost = true
+
+
+
+# Settings specified here will take precedence over those in config/application.rb.
 
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that

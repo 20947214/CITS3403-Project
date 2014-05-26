@@ -1,0 +1,74 @@
+<% provide(:title, 'Sign up') %>
+ <!DOCTYPE html>
+<html>
+<head>
+<%= stylesheet_link_tag "splash" %>
+    
+    <%= csrf_meta_tags %>
+<meta charset="UTF-8">
+<title>Melodia</title>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="getUrlVars.js"></script>
+
+
+
+<script type="text/javascript">
+var randnum = Math.random();
+var inum = 7;
+// Change this number to the number of images you are using.
+var rand1 = Math.round(randnum * (inum-1)) + 1;
+images = new Array
+images[1] = "/assets/splash/1.jpg"
+images[2] = "/assets/splash/2.jpg"
+images[3] = "/assets/splash/3.jpg"
+images[4] = "/assets/splash/4.jpg"
+images[5] = "/assets/splash/5.jpg"
+images[6] = "/assets/splash/6.jpg"
+images[7] = "/assets/splash/7.jpg"
+// Ensure you have an array item for every image you are using.
+var image = images[rand1]
+// Deactivate cloaking device -->
+</script>
+
+</head>
+
+<script language="JavaScript">
+document.write('<body style="background-image:url('+ image +');background-repeat:no-repeat;background-size:cover;">')
+// Deactivate cloaking device -->
+</script>
+
+<div id="banner_container">
+<ul id="banner">
+<li><%= link_to (image_tag("nav_logo_small.png", :alt => "Melodia")), root_path %>
+	<ul><li><a href="#">blog</a></li></ul>
+</li>
+<li><%= link_to "Melodia", root_path %></li> 
+
+</div>
+
+<div id="shift_down_container">
+	<%= image_tag("splash/splash_logo.png", :alt => "Melodia Logo", id: "splash_logo") %>
+	</br>
+  <div class="signup">
+    <%= form_for @user, html: {multipart: true} do |f|  %>
+     <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+</br>
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+</br>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+</br>
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation %>
+      </br>
+      <%= f.label :image, "Optional: User Avatar" %>
+      <%= f.file_field :image %>
+</br>
+      <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

@@ -5,8 +5,23 @@
 
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-# You can use `rake secret` to generate a secure secret key.
+# You can use 'rake secret' to generate a secure secret key.
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-CITS3403Project::Application.config.secret_key_base = '3e24ed5c420b52fa84cea1acb3047a359d819072ce98b955181ab9467216aae77db18689b1134bf90378e7f287e6c6670ff8398518b13f7154d47d45d1d88dae'
+require 'securerandom'
+
+def secure_token
+  token_file = Rails.root.join('.secret')
+  if File.exist?(token_file)
+    # Use the existing token.
+    File.read(token_file).chomp
+  else
+    # Generate a new token and store it in token_file.
+    token = SecureRandom.hex(64)
+    File.write(token_file, token)
+    token
+  end
+end
+
+SampleApp1::Application.config.secret_key_base = secure_token
