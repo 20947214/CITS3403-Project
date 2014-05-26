@@ -1,0 +1,293 @@
+* { 
+	/* CSS reset */
+	margin:0; 
+	padding:0;
+}
+
+
+body {
+	/* These styles have nothing to do with the ribbon */
+	background:url(../images/nav_bg.png) 0 0 repeat;
+	padding:35px 0 0;
+	margin:auto;
+	color:#FFF;
+	font-family: "Myriad Pro";
+}
+
+#banner li {
+	list-style: none;
+	display: block;
+	float:left;
+	margin: 1em;
+}
+
+#banner li a {
+	text-shadow: 0 2px 1px rgba(0,0,0,0.5);
+	display: block;
+    text-decoration: none;
+    color: #f0f0f0;
+    font-size: 1.6em;
+    margin: 0 .5em;
+}
+
+#banner li form input[type="text"] {
+	width: 500px;
+	height: 30px;
+	font-size:28px;
+}
+
+#banner li form input[type="button"] {
+	width: 35px;
+	height: 35px;
+	background:url(../images/download.png) 0 0 no-repeat;
+	border-radius:5px;
+	float:right;
+}
+
+#banner_container img {
+	position:absolute;
+	top:0px;
+	/*right:200px;*/
+	height:100%;
+	width:59.56px;
+}
+
+#banner li a:hover {
+	margin-top:2px;
+}
+
+#banner_container {
+	margin: 0 auto;
+	width: 100%;
+	position:fixed;
+	top:0px;
+	background: #e5592e;
+	height:62px;
+	-moz-box-shadow: 0px 0px 4px rgba(0,0,0,0.55);
+	box-shadow: 0px 0px 4px rgba(0,0,0,0.55);
+	z-index:500;
+	clear:both;
+}
+
+#shift_down_container {
+	position:relative;
+	top:31px;
+	margin: 0 auto;
+}
+
+.logo {
+	position: relative;
+	left:50%;
+	z-index:-1;
+}
+
+nav {
+	display: inline-block;
+	/*z-index:1;*/
+	font-family:Gill Sans, sans-serif;
+	font-variant:small-caps;
+}
+
+/*Forked Ends*/
+nav:after, nav:before {
+    margin-top:0.5em;
+    float:left;
+}
+
+nav:after {
+	border-right-color:transparent;
+	/*z-index:1;*/
+	content: url(../img/nav_tip_after.png);
+}
+
+nav:before {
+    border-left-color:transparent;
+	/*z-index:1;*/
+	content: url(../img/nav_tip_before.png);
+}
+
+/*Links*/
+nav a:link, nav a:visited { 
+    color:#000;
+    text-decoration:none;
+    float:left;
+    height:3.5em;
+    overflow:hidden;
+}
+
+/*Ani Foldings*/
+nav span {
+    background:#fff;
+    display:inline-block;
+    line-height:3em;
+    padding:0 1em;
+    margin-top:0.5em;
+    position:relative;
+
+    -webkit-transition: background-color 0.2s, margin-top 0.2s;  /* Saf3.2+, Chrome */
+    -moz-transition: background-color 0.2s, margin-top 0.2s;  /* FF4+ */
+    -ms-transition: background-color 0.2s, margin-top 0.2s;  /* IE10 */
+    -o-transition: background-color 0.2s, margin-top 0.2s;  /* Opera 10.5+ */
+    transition: background-color 0.2s, margin-top 0.2s;
+}
+
+nav a:hover span {
+    background:url(../img/nav_hover.png);
+    margin-top:0;
+}
+
+
+.ribbon span:before {
+    content: "";
+    position:absolute;
+    top:3em;
+    left:0;
+    border-right:0.5em solid #9B8651;
+    border-bottom:0.5em solid #fff;
+}
+
+.ribbon span:after {
+    content: "";
+    position:absolute;
+    top:3em;
+    right:0;
+    border-left:0.5em solid #9B8651;
+    border-bottom:0.5em solid #fff;
+}
+
+/*Black Out Box*/
+.blackout {
+	background-color:#000;
+	opacity:.3;s
+	height:100%;
+	width:100%;
+	position:fixed;
+	top:0;
+	left:0;
+	z-index:100;
+	display:none;
+	cursor:pointer;
+}
+.msgbox {
+	background-color:#ccc;
+	color:#000;
+	width:70%;
+	height:60%;
+	position:fixed;
+	top:20%;
+	left:15%;
+	border-radius:20px;
+	padding:10px;
+	z-index:101;
+	display:none;
+}
+.searchBox {
+	overflow:auto;
+	width:100%;
+	height:88%;
+	float:left;
+	z-index:102;
+}
+.closeBox {
+	background-color:#CC0000;
+	color:#FFFFFF;
+	padding:8px;
+	float:right;
+	border-radius:3px;
+	cursor:pointer;
+	text-transform:uppercase;
+	z-index:103;
+}
+
+.albumArt {
+	width:300px;
+}
+
+.searchTunes {
+	margin:auto;
+	border:0;
+	width:80%;
+}
+
+.available {
+	float:right;
+}
+
+.shareTunes {
+	margin:auto;
+	border:0;
+	width:80%;
+}
+
+.shareForm {
+	margin:auto;
+}
+
+#caption {
+	width:100%;
+	height:100%;
+}
+
+#submit {
+	margin-left:50%;
+}
+
+.shareTitle {
+	font-family: "Myriad Pro";
+	font-size: 80px;
+	color: #FFF;
+	text-decoration:underline;
+}
+
+.loginTitle {
+	font-family: "Myriad Pro";
+	font-size: 80px;
+	color: #FFF;
+	text-align: center;
+}
+
+.cssBadge {
+	position:absolute;
+	right:10px;
+	bottom:10px;
+}
+
+.navBar {
+	position:fixed;
+	top:10px;
+	left:10px;
+	z-index:100;
+}
+
+.stream {
+	position:relative;
+	left:88px;
+	top:128px;
+	width:300px;
+}
+
+.streamLogo {
+	float:right;
+}
+
+.streamTable {
+	border:0;
+	width:300px;
+}
+
+.streamUser {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.userPic {
+	width:50px;
+}
+
+.streamLike {
+	width:30px;
+}
+
+.followButt {
+	width:100px;
+}
