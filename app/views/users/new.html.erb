@@ -27,15 +27,15 @@ images[6] = "/assets/splash/6.jpg"
 images[7] = "/assets/splash/7.jpg"
 // Ensure you have an array item for every image you are using.
 var image = images[rand1]
+document.body.style.backgroundImage="url("+ image +")";
+document.body.style.backgroundRepeat="no-repeat";
+document.body.style.backgroundSize="cover";
 // Deactivate cloaking device -->
 </script>
 
 </head>
 
-<script language="JavaScript">
-document.write('<body style="background-image:url('+ image +');background-repeat:no-repeat;background-size:cover;">')
-// Deactivate cloaking device -->
-</script>
+<body>
 
 <div id="banner_container">
 <ul id="banner">
