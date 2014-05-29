@@ -4,9 +4,7 @@ class UsersController < ApplicationController
   before_action :correct_user,   only: [:edit, :update]
 
   def index
-    #if params[:search]
       @users = User.search(params[:search]).order("created_at DESC").paginate(page: params[:page])
-    #end
   end
 
   def new
@@ -24,7 +22,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       sign_in @user
-      flash[:success] = "Welcome to the Sample App!"
+      flash[:success] = "Welcome to the Melodia!"
       redirect_to @user
     else
       render 'new'

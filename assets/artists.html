@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Melodia</title>
+<link href="stylesheets/main.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="getUrlVars.js"></script>
+</head>
+
+<body>
+
+<div id="banner_container">
+<ul id="banner">
+<li><a href="#"><img alt="Melodia" src="images/nav_logo_small.png" /></a>
+	<ul><li><a href='#'>Log In</a></li>
+	<li><a href="#">blog</a></li></ul>
+</li>
+<li><a href='#' id="notif"><img alt="Notifications" src="images/notif.png" /></a></li>
+<li><a href="#" id="Me">Me</a></li>
+<li><a href="top100" id="trend">Trending</a></li>
+
+<li><form id="Search" name="Search" onsubmit="return validateForm()" action="search.html?search=searchterm">
+		<input type="text" name="SearchField"/><input type="submit" value=""/></form></li>
+</ul>
+</div>
+
+<div id="shift_down_container">
+<div id="artist">
+</div>
+</div>
+<script>
+function validateForm() {
+	var x=document.forms["Search"]["SearchField"].value;
+	var y=x.split(' ').join('+');
+	$("#Search").replace("searchterm", y);
+	return true;
+}
+
+window.onload = function() {
+var artistId = getUrlVars()["artistId"];
+var z=("https://itunes.apple.com/lookup?id=" + artistId + "&entity=album&limit=1000");
+$("#artist").empty();
+$.ajax({
+	url: z,
+	type: "GET",
+	dataType: "jsonp",
+	async: false,
+	success: function(data) {
+	$("#artist").append("<h1>Albums by " + data.results[0].artistName + "</h1>");
+	for (i=1; i<data.results.length; i++) {
+	var a = data.results[i].artworkUrl100;
+	var b = a.replace("100x100", "225x225");
+	var collection = data.results[i].collectionId;
+	$("#artist").append("<div class='separator'>" 
+	+ "<a href='albums.html?collectionId=" + collection + "'>"
+	+ "<img src='" + b + "' alt='' height=225px width=225px/>" 
+	+ "<h3>" + data.results[i].collectionName + "</h3>" + "</a>" + "</div>");
+	}
+	}
+});
+return false;
+}
+</script>
+</div>
+</div>
+
+</body>
+
+</html>

@@ -1,6 +1,7 @@
 <header >
 <%= stylesheet_link_tag "main", media: "all",
                                            "data-turbolinks-track" => true %>
+
 <div id="banner_container">
 <ul id="banner">
 <li><%= link_to (image_tag("nav_logo_small.png", :alt => "Melodia")), root_path %>
@@ -8,20 +9,11 @@
 	<li><a href="#">blog</a></li></ul>
 </li>
 <li><a href='#' id="notif"><%= image_tag("notif.png", :alt => "Notifications") %></a></li>
-<li><%= link_to "Users", users_path, id:"Me" %></li>
+<li><%= link_to "Search Users", users_path, id:"Me" %></li>
 <li><a href="top100.html" id="trend">Trending</a></li>
 
-<li><form id="Search" name="Search" onsubmit="return validateForm()" action="search.html?search=searchterm">
-		<input type="text" name="SearchField"/><input type="submit" value=""/></form></li>
+<li><%= link_to "Search Music", search_path %></li>
 </ul>
 </div>
-<script>
-function validateForm() {
-	var x=document.forms["Search"]["SearchField"].value;
-	var y=x.split(' ').join('+');
-	$("#Search").replace("searchterm", y);
-	return true;
-}
-</script>
  
 </header>

@@ -7,16 +7,20 @@ class StaticPageController < ApplicationController
       @feed_items = current_user.feed.paginate(page: params[:page])
     end
   end
-
-  def help
   
+  def top100
   end
-
-  def about
+  
+  def tracks
   end
-
-  def contact
+  
+  def albums
   end
-
-
+  
+  def artists
+  end
+  
+  def search
+  end
+  
 end

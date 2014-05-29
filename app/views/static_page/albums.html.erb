@@ -1,0 +1,53 @@
+
+<head>
+<meta charset="UTF-8">
+<title>Melodia</title>
+<link href="stylesheets/main.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="getUrlVars.js"></script>
+<script>
+window.onload = function() {
+var collectionId = getUrlVars()["collectionId"];
+var z=("https://itunes.apple.com/lookup?id=" + collectionId + "&entity=song&limit=1000");
+$("#artist").empty();
+$.ajax({
+	url: z,
+	type: "GET",
+	dataType: "jsonp",
+	async: false,
+	success: function(data) {
+	var a = data.results[0].artworkUrl100;
+	var b = a.replace("100x100", "600x600");
+	var artist = data.results[0].artistId;
+	$("#albumart").append("<h3>" + data.results[0].collectionName + "<br/>" 
+	+ "<a href='artists?artistId=" + artist + "' title='" + data.results[0].artistName.replace("'","&apos;") + "'>" + data.results[0].artistName + "</a>" + "<br/>" 
+	+ "<img src='" + b + "' width='400' height='400' alt=''/>" + "</h3>"
+	+ "<a href='" + data.results[0].collectionViewUrl + "'><img src='/assets/available.png' height=36.5px width=100px alt=''/></a>");
+	
+	for (i=1; i<data.results.length; i++) {
+	var track = data.results[i].trackId;
+	$("#songlist").append("<div class='separator2'>" 
+	+ "<a  href='tracks?trackId=" + track + "'>" + "<h4>"
+	+ data.results[i].trackName + "</h4>" + "</a>"
+	+ "<audio controls preload='none'><source src='" + data.results[i].previewUrl + "' type='audio/mpeg'></audio>" + "</div>");
+	}
+	
+	}
+});
+return false;
+}
+</script>
+</head>
+
+<body>
+<%= render 'layouts/header' %>
+
+<div id="shift_down_container">
+<div id="album">
+<div id="albumart">
+</div>
+<div id="songlist">
+</div>
+</div>
+</div>
+</body>

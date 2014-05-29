@@ -17,11 +17,11 @@
 	<li><a href="#">blog</a></li></ul>
 </li>
 <li><a href='#' id="notif"><img alt="Notifications" src="/assets/notif.png" /></a></li>
-<li><%= link_to "Search Users", users_path, id:"Me" %></li>
-<li><a href="top100" id="trend">Trending</a></li>
+<li><a href="#" id="Me">Me</a></li>
+<li><a href="top100.html" id="trend">Trending</a></li>
 
 <li><form id="Search" name="Search" onsubmit="return validateForm()" method="post" data-remote="true" >
-		<input type="text" name="SearchField" id="searcho" placeholder="Search Music" /><input type="submit" value="" id="searchbutton"/></form></li>
+		<input type="text" name="SearchField" id="searcho" placeholder="Search Music"/><input type="submit" value=""/></form></li>
 </ul>
 </div>
 
@@ -61,10 +61,10 @@ $.ajax({
 	
 	$("#searchresults").append(
 	"<div class='separator'>" 
-	+ "<a href='albums?collectionId=" + collection + "'>"
+	+ "<a href='albums.html?collectionId=" + collection + "'>"
 	+ "<img src='" + b + "' alt='' height=225px width=225px/>" + "</a>" + "<br/>"
-	+ "<h3>" + "<a  href='tracks?trackId=" + track + "' title='" + data.results[i].trackName.replace("'","&apos;") + "'>" + data.results[i].trackName + "</a>" + "<br/>" 
-	+ "<a href='artists?artistId=" + artist + "' title='" + data.results[i].artistName.replace("'","&apos;") + "'>" + data.results[i].artistName + "</a>" + "</h3>"
+	+ "<h3>" + "<a  href='tracks.html?trackId=" + track + "' title='" + data.results[i].trackName.replace("'","&apos;") + "'>" + data.results[i].trackName + "</a>" + "<br/>" 
+	+ "<a href='artists.html?artistId=" + artist + "' title='" + data.results[i].artistName.replace("'","&apos;") + "'>" + data.results[i].artistName + "</a>" + "</h3>"
 	+ "<audio controls preload='none'><source src='" + data.results[i].previewUrl + "' type='audio/mpeg'></audio>"
 	+ "<a href='" + data.results[i].trackViewUrl + "'><img src='/assets/available.png' height=36.5px width=100px alt=''/></a>"
 	+ "&nbsp&nbsp<a href='#'><img src='/assets/share_small.png' height=36.5px width=100px alt=''/></a>"

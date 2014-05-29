@@ -18,11 +18,11 @@ match '/signout', to: 'sessions#destroy',    via: 'delete'
 match '/help',    to: 'static_page#help',    via: 'get'
 match '/about',   to: 'static_page#about',   via: 'get'
 match '/contact', to: 'static_page#contact', via: 'get'
-match '/search',  to: 'static_page#search',  via: 'post'
-match '/albums',  to: 'static_page#albums',  via: 'post'
-match '/artists', to: 'static_page#artists', via: 'post'
-match '/tracks',  to: 'static_page#tracks',  via: 'post'
-match '/top100',  to: 'static_page#top100',  via: 'post'
+match '/search',  to: 'static_page#search',  via: 'get'
+match '/albums',  to: 'static_page#albums',  via: 'get'
+match '/artists', to: 'static_page#artists', via: 'get'
+match '/tracks',  to: 'static_page#tracks',  via: 'get'
+match '/top100',  to: 'static_page#top100',  via: 'get'
 
 # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

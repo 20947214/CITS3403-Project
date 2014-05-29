@@ -1,0 +1,49 @@
+
+<head>
+<meta charset="UTF-8">
+<title>Melodia</title>
+<link href="stylesheets/main.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="getUrlVars.js"></script>
+
+</head>
+
+<body>
+<%= render 'layouts/header' %>
+
+<div id="shift_down_container">
+<script>
+artist();
+</script>
+<div id="artist">
+</div>
+<script>
+window.onload = artist;
+function artist() {
+var artistId = getUrlVars()["artistId"];
+var z=("https://itunes.apple.com/lookup?id=" + artistId + "&entity=album&limit=1000");
+$("#artist").empty();
+$.ajax({
+	url: z,
+	type: "GET",
+	dataType: "jsonp",
+	async: false,
+	success: function(data) {
+	$("#artist").append(
+	"<h1>Albums by " + data.results[0].artistName + "</h1>");
+	for (i=1; i<data.results.length; i++) {
+	var a = data.results[i].artworkUrl100;
+	var b = a.replace("100x100", "225x225");
+	var collection = data.results[i].collectionId;
+	$("#artist").append("<div class='separator'>" 
+	+ "<a href='albums?collectionId=" + collection + "'>"
+	+ "<img src='" + b + "' alt='' height=225px width=225px/>" 
+	+ "<h3>" + data.results[i].collectionName + "</h3>" + "</a>" + "</div>");
+	}
+	}
+});
+return false;
+}
+</script>
+</div>
+</body>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Melodia</title>
+<link href="stylesheets/main.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="getUrlVars.js"></script>
+</head>
+
+<body>
+
+<div id="banner_container">
+<ul id="banner">
+<li><a href="#"><img alt="Melodia" src="images/nav_logo_small.png" /></a>
+	<ul><li><a href='#'>Log In</a></li>
+	<li><a href="#">blog</a></li></ul>
+</li>
+<li><a href='#' id="notif"><img alt="Notifications" src="images/notif.png" /></a></li>
+<li><a href="#" id="Me">Me</a></li>
+<li><a href="top100.html" id="trend">Trending</a></li>
+
+<li><form id="Search" name="Search" onsubmit="return validateForm()" action="search.html?search=searchterm">
+		<input type="text" name="SearchField"/><input type="submit" value=""/></form></li>
+</ul>
+</div>
+
+<div id="shift_down_container">
+<div id="wrapper" >
+<br/>
+	<form id="top" name="top" onsubmit="return fetch100()" method="post">
+		<input type="radio" id="songs" name="type" value="songs" checked="checked">Songs<br/>
+		<input type="radio" id="albums" name="type" value="albums">Albums<br/>
+		<select id="genres">
+			<option value="All">All</option>
+			<option value="20">Alternative</option>
+			<option value="29">Anime</option>
+			<option value="2">Blues</option>
+			<option value="1122">Brazilian</option>
+			<option value="4">Children's Music</option>
+			<option value="1232">Chinese</option>
+			<option value="22">Christian and Gospel</option>
+			<option value="5">Classical</option>
+			<option value="3">Comedy</option>
+			<option value="6">Country</option>
+			<option value="17">Dance</option>
+			<option value="50000063">Disney</option>
+			<option value="25">Easy Listening</option>
+			<option value="7">Electronic</option>
+			<option value="28">Enka</option>
+			<option value="50">Fitness & Workout</option>
+			<option value="50000064">French Pop</option>
+			<option value="50000068">German Folk</option>
+			<option value="50000066">German Pop</option>
+			<option value="18">Hip-Hop/Rap</option>
+			<option value="8">Holiday</option>
+			<option value="1262">Indian</option>
+			<option value="53">Instrumental</option>
+			<option value="27">J-Pop</option>
+			<option value="11">Jazz</option>
+			<option value="51">K-Pop</option>
+			<option value="52">Karaoke</option>
+			<option value="30">Kayokyoku</option>
+			<option value="1243">Korean</option>
+			<option value="12">Latino</option>
+			<option value="13">New Age</option>
+			<option value="9">Opera</option>
+			<option value="14">Pop</option>
+			<option value="15">R&B/Soul</option>
+			<option value="24">Reggae</option>
+			<option value="21">Rock</option>
+			<option value="10">Singer/Songwriter</option>
+			<option value="16">Soundtrack</option>
+			<option value="50000061">Spoken Word</option>
+			<option value="23">Vocal</option>
+			<option value="19">World</option>
+		</select>
+	<input type="submit" id="Submit" value="Go" />
+	</form>
+	<br/>
+<div id="top100">
+</div>
+<script>
+function validateForm() {
+	var x=document.forms["Search"]["SearchField"].value;
+	var y=x.split(' ').join('+');
+	$("#Search").replace("searchterm", y);
+	return true;
+}
+
+function fetch100()
+{
+if (document.getElementById("songs").checked) {
+	var x="song";
+}
+if (document.getElementById("albums").checked) {
+	var x="album";
+}
+var w=document.getElementById("genres");
+var y=w.options[w.selectedIndex].value;
+if (y=="All") var gen = "";
+else var gen = ("genre=" + y + "/");
+var z=("https://itunes.apple.com/us/rss/top" + x + "s/limit=50/" + gen + "json");
+console.log(z);
+$("#top100").empty();
+$.ajax({
+	url: z,
+	type: "GET",
+	dataType: "jsonp",
+	async: false,
+	success: function(data) {
+	for (i=0; i<data.feed.entry.length; i++) {
+	var id = data.feed.entry[i].id.attributes["im:id"];
+	z2 = ("https://itunes.apple.com/lookup?id=" + id + "&entity=" + x);
+$.ajax({
+	url: z2,
+	type: "GET",
+	dataType: "jsonp",
+	async: false,
+	success: function(data) {
+	var a = data.results[0].artworkUrl100;
+	var b = a.replace("100x100", "225x225");
+	var artist = data.results[0].artistId;
+	var collection = data.results[0].collectionId;
+	if (x=="song") {
+	var track = data.results[0].trackId;
+	$("#top100").append("<div class='separator'>" 
+	+ "<a href='albums.html?collectionId=" + collection + "'>"
+	+ "<img src='" + b + "' alt=''/>" + "</a>" + "<br/>"
+	+ "<h3>" + "<a  href='tracks.html?trackId=" + track + "'>" + data.results[0].trackName + "</a>" + "<br/>" 
+	+ "<a href='artists.html?artistId=" + artist + "'>" + data.results[0].artistName + "</a>" + "</h3>"
+	+ "<audio controls preload='none'><source src='" + data.results[0].previewUrl + "' type='audio/mpeg'></audio>"
+	+ "<a href='" + data.results[0].trackViewUrl + "'><img src='images/available.png' height=36.5px width=100px alt=''/></a>"
+	+ "&nbsp&nbsp<a href='#'><img src='share_small.png' height=36.5px width=100px alt=''/></a>"
+	+ "</div>");
+	}
+	if (x=="album") {
+	$("#top100").append("<div class='separator'>" 
+	+ "<a href='albums.html?collectionId=" + collection + "'>"
+	+ "<img src='" + b + "' alt=''/>" + "<br/>"
+	+ "<h3>" + data.results[0].collectionName + "</a>" + "<br/>" 
+	+ "<a href='artists.html?artistId=" + artist + "'>" + data.results[0].artistName + "</a>" + "</h3>"
+	+ "<a href='" + data.results[0].collectionViewUrl + "'><img src='images/available.png' height=36.5px width=100px alt=''/></a>"
+	+ "</div>");
+	}
+	}
+});
+}
+}
+});
+return false;
+}
+</script>
+</div>
+</div>
+
+</body>
+
+</html>
