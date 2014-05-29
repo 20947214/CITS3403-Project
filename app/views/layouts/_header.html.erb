@@ -5,12 +5,11 @@
 <div id="banner_container">
 <ul id="banner">
 <li><%= link_to (image_tag("nav_logo_small.png", :alt => "Melodia")), root_path %>
-	<ul><li><%= link_to "Log Out", signout_path, method: "delete" %></li>
-	<li><a href="#">blog</a></li></ul>
+	<ul><li><%= link_to "Log Out", signout_path, method: "delete" %></li></ul>
 </li>
 <li><a href='#' id="notif"><%= image_tag("notif.png", :alt => "Notifications") %></a></li>
 <li><%= link_to "Search Users", users_path, id:"Me" %></li>
-<li><a href="top100.html" id="trend">Trending</a></li>
+<li><%= link_to "Trending", top100_path, id:"trend" %></li>
 
 <li><%= link_to "Search Music", search_path %></li>
 </ul>

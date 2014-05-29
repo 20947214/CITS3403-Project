@@ -6,7 +6,7 @@
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="getUrlVars.js"></script>
 <script>
-window.onload = function() {
+$(document).ready( function() {
 var collectionId = getUrlVars()["collectionId"];
 var z=("https://itunes.apple.com/lookup?id=" + collectionId + "&entity=song&limit=1000");
 $("#artist").empty();
@@ -35,7 +35,7 @@ $.ajax({
 	}
 });
 return false;
-}
+});
 </script>
 </head>
 

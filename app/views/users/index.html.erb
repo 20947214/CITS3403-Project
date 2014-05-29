@@ -12,16 +12,15 @@
 
 <div id="banner_container">
 <ul id="banner">
-<li><a href="#"><img alt="Melodia" src="/assets/nav_logo_small.png" /></a>
-	<ul><li><a href='#'>Log In</a></li>
-	<li><a href="#">blog</a></li></ul>
+<li><%= link_to (image_tag("nav_logo_small.png", :alt => "Melodia")), root_path %>
+	<ul><li><%= link_to "Log Out", signout_path, method: "delete" %></li></ul>
 </li>
 <li><a href='#' id="notif"><img alt="Notifications" src="/assets/notif.png" /></a></li>
 <li><%= form_tag(users_path, :method => "get") do %>
   <%= text_field_tag :search, params[:search], placeholder: "Search Users" , id: "Jankfield" %>
   <%= submit_tag "", :name => :nil, id:"Jank" %>
 <% end %></li>
-<li><a href="top100.html" id="trend">Trending</a></li>
+<li><%= link_to "Trending", top100_path, id:"trend" %></li>
 
 <li><%= link_to "Search Music", search_path %></li>
 </ul>
@@ -29,8 +28,8 @@
 
 
 <div id="shift_down_container">
-
-<h1>All users</h1>
+<div id="user_shift">
+<h1>Results</h1>
 
 
 
@@ -45,6 +44,6 @@
 
 
 
-
+</div>
 </div>
 </body>

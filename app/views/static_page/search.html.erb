@@ -12,13 +12,12 @@
 
 <div id="banner_container">
 <ul id="banner">
-<li><a href="#"><img alt="Melodia" src="/assets/nav_logo_small.png" /></a>
-	<ul><li><a href='#'>Log In</a></li>
-	<li><a href="#">blog</a></li></ul>
+<li><%= link_to (image_tag("nav_logo_small.png", :alt => "Melodia")), root_path %>
+	<ul><li><%= link_to "Log Out", signout_path, method: "delete" %></li></ul>
 </li>
 <li><a href='#' id="notif"><img alt="Notifications" src="/assets/notif.png" /></a></li>
 <li><%= link_to "Search Users", users_path, id:"Me" %></li>
-<li><a href="top100" id="trend">Trending</a></li>
+<li><%= link_to "Trending", top100_path, id:"trend" %></li>
 
 <li><form id="Search" name="Search" onsubmit="return validateForm()" method="post" data-remote="true" >
 		<input type="text" name="SearchField" id="searcho" placeholder="Search Music" /><input type="submit" value="" id="searchbutton"/></form></li>

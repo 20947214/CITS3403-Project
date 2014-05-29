@@ -428,3 +428,23 @@ h1 {
 #Jankfield {
 	margin-left: 50px;
 }
+
+.row {
+	color: black;
+	margin-left: 50px;
+	margin-top: 0px;
+}
+
+.content img {
+	display: inline;
+	width: 300px;
+}
+
+.row h3, .row h1 {
+	text-align: left;
+	padding: 10px;
+}
+
+#user_shift {
+	margin-left: 50px;
+}

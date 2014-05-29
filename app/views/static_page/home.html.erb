@@ -1,4 +1,7 @@
 <% if signed_in? %>
+<body>
+<%= render 'layouts/header' %>
+<div id="shift_down_container">
   <div class="row">
     <aside class="span4">
       <section>
@@ -16,13 +19,15 @@
       <%= render 'shared/feed' %>
     </div>
   </div>
+  </div>
+  </body>
 <% else %>
   <!DOCTYPE html>
 <html>
 <head>
 <%= stylesheet_link_tag "splash" , media: "all",
                                            "data-turbolinks-track" => true %>
-    
+										   
     <%= csrf_meta_tags %>
 <meta charset="UTF-8">
 <title>Melodia</title>
@@ -55,7 +60,6 @@ document.body.style.backgroundSize="cover";
 <div id="banner_container">
 <ul id="banner">
 <li><%= link_to (image_tag("nav_logo_small.png", :alt => "Melodia")), root_path %>
-	<ul><li><a href="#">blog</a></li></ul>
 </li>
 <li><%= link_to "Melodia", root_path %></li> 
 

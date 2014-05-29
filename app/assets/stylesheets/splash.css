@@ -472,3 +472,8 @@ h1 {
 	color: white;
 	padding: 10px;
 }
+
+#sign_in:hover, #sign_up:hover {
+	background: #ffffff;
+	color: #ed0505;
+}

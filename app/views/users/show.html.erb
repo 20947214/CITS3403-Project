@@ -1,5 +1,6 @@
 <% provide(:title, @user.name) %>
 <%= render 'layouts/header' %>
+<div id="shift_down_container">
 <div class="row">
   <aside class="span4">
     <section>
@@ -23,4 +24,5 @@
       <%= will_paginate @microposts %>
     <% end %>
   </div>
+</div>
 </div>

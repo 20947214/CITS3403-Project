@@ -1,34 +1,82 @@
-<!DOCTYPE html>
-<html>
 <head>
 <meta charset="UTF-8">
 <title>Melodia</title>
 <link href="stylesheets/main.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="getUrlVars.js"></script>
+<script>
+function fetch100()
+{
+if (document.getElementById("songs").checked) {
+	var x="song";
+}
+if (document.getElementById("albums").checked) {
+	var x="album";
+}
+var w=document.getElementById("genres");
+var y=w.options[w.selectedIndex].value;
+if (y=="All") var gen = "";
+else var gen = ("genre=" + y + "/");
+var z=("https://itunes.apple.com/us/rss/top" + x + "s/limit=50/" + gen + "json");
+console.log(z);
+$("#top100").empty();
+$.ajax({
+	url: z,
+	type: "GET",
+	dataType: "jsonp",
+	async: false,
+	success: function(data) {
+	for (i=0; i<data.feed.entry.length; i++) {
+	var id = data.feed.entry[i].id.attributes["im:id"];
+	z2 = ("https://itunes.apple.com/lookup?id=" + id + "&entity=" + x);
+$.ajax({
+	url: z2,
+	type: "GET",
+	dataType: "jsonp",
+	async: false,
+	success: function(data) {
+	var a = data.results[0].artworkUrl100;
+	var b = a.replace("100x100", "225x225");
+	var artist = data.results[0].artistId;
+	var collection = data.results[0].collectionId;
+	if (x=="song") {
+	var track = data.results[0].trackId;
+	$("#top100").append("<div class='separator'>" 
+	+ "<a href='albums?collectionId=" + collection + "'>"
+	+ "<img src='" + b + "' alt='' width=225px height=225px />" + "</a>" + "<br/>"
+	+ "<h3>" + "<a  href='tracks?trackId=" + track + "' title='" + data.results[0].trackName.replace("'","&apos;") + "'>" + data.results[0].trackName + "</a>" + "<br/>" 
+	+ "<a href='artists?artistId=" + artist + "' title='" + data.results[0].artistName.replace("'","&apos;") + "'>" + data.results[0].artistName + "</a>" + "</h3>"
+	+ "<audio controls preload='none'><source src='" + data.results[0].previewUrl + "' type='audio/mpeg'></audio>"
+	+ "<a href='" + data.results[0].trackViewUrl + "'><img src='/assets/available.png' height=36.5px width=100px alt=''/></a>"
+	+ "&nbsp&nbsp<a href='#'><img src='/assets/share_small.png' height=36.5px width=100px alt=''/></a>"
+	+ "</div>");
+	}
+	if (x=="album") {
+	$("#top100").append("<div class='separator'>" 
+	+ "<a href='albums?collectionId=" + collection + "' title='" + data.results[0].collectionName.replace("'","&apos;") + "'>"
+	+ "<img src='" + b + "' alt='' width=225 height=225px />" + "<br/>"
+	+ "<h3>" + data.results[0].collectionName + "</a>" + "<br/>" 
+	+ "<a href='artists?artistId=" + artist + "' title='" + data.results[0].artistName.replace("'","&apos;") + "'>" + data.results[0].artistName + "</a>" + "</h3>"
+	+ "<a href='" + data.results[0].collectionViewUrl + "'><img src='/assets/available.png' height=36.5px width=100px alt=''/></a>"
+	+ "</div>");
+	}
+	}
+});
+}
+}
+});
+return false;
+}
+</script>
 </head>
 
 <body>
-
-<div id="banner_container">
-<ul id="banner">
-<li><a href="#"><img alt="Melodia" src="images/nav_logo_small.png" /></a>
-	<ul><li><a href='#'>Log In</a></li>
-	<li><a href="#">blog</a></li></ul>
-</li>
-<li><a href='#' id="notif"><img alt="Notifications" src="images/notif.png" /></a></li>
-<li><a href="#" id="Me">Me</a></li>
-<li><a href="top100.html" id="trend">Trending</a></li>
-
-<li><form id="Search" name="Search" onsubmit="return validateForm()" action="search.html?search=searchterm">
-		<input type="text" name="SearchField"/><input type="submit" value=""/></form></li>
-</ul>
-</div>
+<%= render 'layouts/header' %>
 
 <div id="shift_down_container">
 <div id="wrapper" >
 <br/>
-	<form id="top" name="top" onsubmit="return fetch100()" method="post">
+	<form id="top" name="top" onsubmit="return fetch100()" method="post" data-remote="true">
 		<input type="radio" id="songs" name="type" value="songs" checked="checked">Songs<br/>
 		<input type="radio" id="albums" name="type" value="albums">Albums<br/>
 		<select id="genres">
@@ -80,80 +128,8 @@
 	<br/>
 <div id="top100">
 </div>
-<script>
-function validateForm() {
-	var x=document.forms["Search"]["SearchField"].value;
-	var y=x.split(' ').join('+');
-	$("#Search").replace("searchterm", y);
-	return true;
-}
 
-function fetch100()
-{
-if (document.getElementById("songs").checked) {
-	var x="song";
-}
-if (document.getElementById("albums").checked) {
-	var x="album";
-}
-var w=document.getElementById("genres");
-var y=w.options[w.selectedIndex].value;
-if (y=="All") var gen = "";
-else var gen = ("genre=" + y + "/");
-var z=("https://itunes.apple.com/us/rss/top" + x + "s/limit=50/" + gen + "json");
-console.log(z);
-$("#top100").empty();
-$.ajax({
-	url: z,
-	type: "GET",
-	dataType: "jsonp",
-	async: false,
-	success: function(data) {
-	for (i=0; i<data.feed.entry.length; i++) {
-	var id = data.feed.entry[i].id.attributes["im:id"];
-	z2 = ("https://itunes.apple.com/lookup?id=" + id + "&entity=" + x);
-$.ajax({
-	url: z2,
-	type: "GET",
-	dataType: "jsonp",
-	async: false,
-	success: function(data) {
-	var a = data.results[0].artworkUrl100;
-	var b = a.replace("100x100", "225x225");
-	var artist = data.results[0].artistId;
-	var collection = data.results[0].collectionId;
-	if (x=="song") {
-	var track = data.results[0].trackId;
-	$("#top100").append("<div class='separator'>" 
-	+ "<a href='albums.html?collectionId=" + collection + "'>"
-	+ "<img src='" + b + "' alt=''/>" + "</a>" + "<br/>"
-	+ "<h3>" + "<a  href='tracks.html?trackId=" + track + "' title='" + data.results[0].trackName.replace("'","&apos;") + "'>" + data.results[0].trackName + "</a>" + "<br/>" 
-	+ "<a href='artists.html?artistId=" + artist + "' title='" + data.results[0].artistName.replace("'","&apos;") + "'>" + data.results[0].artistName + "</a>" + "</h3>"
-	+ "<audio controls preload='none'><source src='" + data.results[0].previewUrl + "' type='audio/mpeg'></audio>"
-	+ "<a href='" + data.results[0].trackViewUrl + "'><img src='images/available.png' height=36.5px width=100px alt=''/></a>"
-	+ "&nbsp&nbsp<a href='#'><img src='images/share_small.png' height=36.5px width=100px alt=''/></a>"
-	+ "</div>");
-	}
-	if (x=="album") {
-	$("#top100").append("<div class='separator'>" 
-	+ "<a href='albums.html?collectionId=" + collection + "' title='" + data.results[0].collectionName.replace("'","&apos;") + "'>"
-	+ "<img src='" + b + "' alt=''/>" + "<br/>"
-	+ "<h3>" + data.results[0].collectionName + "</a>" + "<br/>" 
-	+ "<a href='artists.html?artistId=" + artist + "' title='" + data.results[0].artistName.replace("'","&apos;") + "'>" + data.results[0].artistName + "</a>" + "</h3>"
-	+ "<a href='" + data.results[0].collectionViewUrl + "'><img src='images/available.png' height=36.5px width=100px alt=''/></a>"
-	+ "</div>");
-	}
-	}
-});
-}
-}
-});
-return false;
-}
-</script>
 </div>
 </div>
 
 </body>
-
-</html>
